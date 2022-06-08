@@ -8,7 +8,7 @@ body {
   background-color: #000000;
   padding: 50px;
   overflow: hidden;
-  background-image: url('./assets/img/bg2.jpg');
+  background-image: url("./assets/img/bg2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-width: 940px;
@@ -72,6 +72,17 @@ svg {
   height: 30px;
   width: 30px;
   cursor: pointer;
+}
+
+.button {
+  position: absolute;
+  opacity: 0;
+}
+
+.container tbody tr:nth-child(1) {
+  height: 0;
+  display: block;
+  visibility: hidden;
 }
 /* ///////////////////////////////////////////// */
 /* @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700); */
@@ -492,4 +503,92 @@ svg {
   color: #00d9ff;
   box-shadow: 0 0 15px #00d9ff;
   text-shadow: 0 0 15px #00d9ff;
+}
+
+/* ////////////////////////////////////////////////////////// */
+.box-modal {
+  display: none;
+  text-align: center;
+  width: 30%;
+  height: 20%;
+  background-color: rgb(11, 51, 51);
+  color: white;
+  z-index: 5;
+  position: absolute;
+  top: 30%;
+  left: 35%;
+}
+
+.close-errorsBtn {
+  width: 20%;
+  cursor: pointer;
+  border: 0;
+  padding: 0.5rem 1rem;
+  color: black;
+  background-color: #45f0cb;
+  border-radius: 5px;
+  font-size: 0.7rem;
+}
+
+.box-modal {
+  display: none;
+  text-align: center;
+  width: 30%;
+  height: 20%;
+  background-color: rgb(11, 51, 51);
+  color: white;
+  z-index: 5;
+  position: absolute;
+  top: 30%;
+  left: 35%;
+}
+
+.errors,
+#assembled_successfully_container {
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.errors p,
+#assembled_successfully_container,
+p #errorLine_container p {
+  margin: 0.2rem 0.1rem !important;
+}
+
+.close-errorsBtn {
+  width: 20%;
+  cursor: pointer;
+  border: 0;
+  padding: 0.5rem 1rem;
+  color: black;
+  background-color: #45f0cb;
+  border-radius: 5px;
+  font-size: 0.7rem;
+}
+
+.box-modal {
+  display: none;
+  text-align: center;
+  width: 30%;
+  height: 20%;
+  background-color: rgb(11, 51, 51);
+  color: white;
+  z-index: 5;
+  position: absolute;
+  top: 30%;
+  left: 35%;
+}
+
+.box-shadow {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  z-index: 3;
 }

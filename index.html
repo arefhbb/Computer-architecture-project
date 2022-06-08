@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>memari</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="./scipt.js" defer></script>
+    <script src="app.js" defer></script>
+    <script src="draw_tables.js" defer></script>
+    <script src="instructions.js" defer></script>
 </head>
 
 <body>
+    <div class="box-shadow"></div>
     <div class="containerR">
         <div class="box box1 main-div main-div2">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
             <div class="svgs">
-                <?xml version="1.0" ?><svg style="enable-background:new 0 0 24 24; fill: rgb(245, 57, 182);" version="1.1" viewBox="0 0 24 24"
-                    xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <?xml version="1.0" ?><svg style="enable-background:new 0 0 24 24; fill: rgb(245, 57, 182);"
+                    version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" id="assemblerBtn">
                     <g id="info" />
                     <g id="icons">
                         <path
@@ -25,9 +29,9 @@
                     </g>
                     <title>Compile & Run</title>
                 </svg>
-                <?xml version="1.0" ?><svg style="fill: rgb(51, 163, 7);" class="icon icon-tabler icon-tabler-step-into" fill="none" height="24"
-                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <?xml version="1.0" ?><svg style="fill: rgb(51, 163, 7);" class="icon icon-tabler icon-tabler-step-into"
+                    fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" id="executeBtn">
                     <path d="M0 0h24v24H0z" fill="none" stroke="none" />
                     <line x1="12" x2="12" y1="3" y2="15" />
                     <line x1="16" x2="12" y1="11" y2="15" />
@@ -35,20 +39,24 @@
                     <circle cx="12" cy="20" r="1" />
                     <title>Step</title>
                 </svg>
+                <?xml version="1.0" ?><svg fill="none" height="24" viewBox="0 0 24 24" width="24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd"
+                        d="M5 5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V20C19 20.388 18.7755 20.741 18.4242 20.9056C18.0728 21.0702 17.6579 21.0166 17.3598 20.7682L12 16.3017L6.64018 20.7682C6.3421 21.0166 5.92723 21.0702 5.57584 20.9056C5.22446 20.741 5 20.388 5 20V5ZM17 5H7V17.865L11.3598 14.2318C11.7307 13.9227 12.2693 13.9227 12.6402 14.2318L17 17.865V5Z"
+                        fill="black" fill-rule="evenodd" />
+                    <title>Save</title>
+                </svg>
             </div>
         </div>
-        <div class="box box2 main-div main-div2">
+        <div class="box box2 main-div main-div2 memory-table table">
             <table class="container">
                 <thead>
                     <tr>
                         <th>
-                            <h1>Label</h1>
+                            <h1>Instruction</h1>
                         </th>
                         <th>
                             <h1>Address</h1>
-                        </th>
-                        <th>
-                            <h1>Instruction</h1>
                         </th>
                         <th>
                             <h1>Hex</h1>
@@ -56,84 +64,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
-                    <tr>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                        <td>lorem</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="box box3">
         <div class="container2">
-            <div>SC :&nbsp;<span>0</span></div>
-            <div>PC :&nbsp;<span>0</span></div>
-            <div>AR :&nbsp;<span>0</span></div>
-            <div>IR :&nbsp;<span>0</span></div>
-            <div>DR :&nbsp;<span>0</span></div>
-            <div>TR :&nbsp;<span>0</span></div>
-            <div>INPR :&nbsp;<span>0</span></div>
-            <div>OUTR :&nbsp;<span>0</span></div>
-            <div>AC :&nbsp;<span>0</span></div>
-            <div>IEN :&nbsp;<span>0</span></div>
-            <div>FGI :&nbsp;<span>0</span></div>
-            <div>FGO :&nbsp;<span>0</span></div>
-            <div>I :&nbsp;<span>0</span></div>
-            <div>S :&nbsp;<span>0</span></div>
-            <div>E :&nbsp;<span>0</span></div>
-            <div>R :&nbsp;<span>0</span></div>
+            <div>IR :&nbsp;<span class="IR">0</span></div>
+            <div>PC :&nbsp;<span class="PC">0</span></div>
+            <div>AC :&nbsp;<span class="AC">0</span></div>
+            <div>DR :&nbsp;<span class="DR">0</span></div>
+            <div>AR :&nbsp;<span class="AR">0</span></div>
+            <div>M[AR] :&nbsp;<span class="M">0</span></div>
+            <div>E :&nbsp;<span class="E">0</span></div>
+            <div>SC :&nbsp;<span class="SC">0</span></div>
+            <div>INPR :&nbsp;<span class="INPR">0</span></div>
+            <div>OUTR :&nbsp;<span class="OUTR">0</span></div>
+            <div>IEN :&nbsp;<span class="IEN">0</span></div>
+            <div>FGI :&nbsp;<span class="FGI">0</span></div>
+            <div>FGO :&nbsp;<span class="FGO">0</span></div>
+            <div>I :&nbsp;<span class="I">0</span></div>
+            <div>S :&nbsp;<span class="S">0</span></div>
+            <div>R :&nbsp;<span class="R">0</span></div>
         </div>
     </div>
+    <div class="instruction-info">
+        <div id="endProgram_notif" class="box-modal show-box">
+            <div>
+                <p>End of Program:)</p>
+                <p>to test another example click on RESET button</p>
+            </div>
+            <button class="close-errorsBtn" id="endprogramBtn">OK</button>
+        </div>
+        <div class="box-modal errors">
+            <p id="error-line">Editor is Empty</p>
+            <button class="close-errorsBtn" id="emptyBtn">OK</button>
+        </div>
+        <div class="box-modal" id="errorLine_container">
+            <p>an invalid instruction in address <span id="error_line"></span> of program </p>
+            <button class="close-errorsBtn" id="errorLineBtn">OK</button>
+        </div>
+        <div class="box-modal" id="assembled_successfully_container">
+            <p>program assembled successfully :)</p>
+            <button class="close-errorsBtn" id="assembled_successfully_Btn">OK</button>
+        </div>
+    </div>
+    <button class="button" id="fetchBtn" disabled></button>
+    <button class="button" id="decodeBtn" disabled></button>
 </body>
 
 </html>
