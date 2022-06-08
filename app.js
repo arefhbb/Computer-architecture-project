@@ -241,7 +241,7 @@ function scanEveryLine_second() {
             LC = addHexNumbers(LC, '1');
             numberOfAddress++;
         } else {
-            
+
             //errorLine_container.style.display = 'flex';
             //boxShadow.classList.add('show');
             messageBox.value = 'program ended!'
@@ -364,26 +364,22 @@ function start_assemble() {
             console.log(labels_table);
             console.log(memory_table_contents);
             updateContentsColumn();
-            // assemblerBtn.disabled = true;
             instr_values['Memory'] = '0x' + binaryToHex(PC);
             instr_values['PC'] = '0x' + binaryToHex(PC);
-            // updateInstructionTable('initial');
             enableBtn(fetchBtn);
         }
     }
 }
 
-// get contents of editor
-// click on assemble button
 assemblerBtn.addEventListener("click", start_assemble);
 close_empty_error.addEventListener('click', () => {
     errors_div.style.display = 'none';
     boxShadow.classList.remove('show');
 })
 
-saveBtn.addEventListener("click" , () => {
+saveBtn.addEventListener("click", () => {
     messageBox.style.color = '#03ff0b';
-    localStorage.setItem("lastCode" , JSON.stringify(codeArea.value));
+    localStorage.setItem("lastCode", JSON.stringify(codeArea.value));
     messageBox.value = 'code saved in local storage successfully !';
 })
 
@@ -392,118 +388,8 @@ errorLineBtn.addEventListener('click', () => {
     messageBox.value = 'an invalid instruction in address ';
 })
 
-resetBtn.addEventListener('click' , () => {
+resetBtn.addEventListener('click', () => {
     messageBox.style.color = '#03ff0b';
     codeArea.value = "";
     messageBox.value = 'reseted successfuly!';
 })
-
-// assembled_successfully_Btn.addEventListener('click', () => {
-//     messageBox.style.color = 'green';
-//     messageBox.value = 'program assembled successfully!';
-// })
-
-// ***************************  EXAMPLES  *************************************
-/**
-ORG 100
-LDA SUB
-CMA
-INC
-ADD MIN
-STA DIF
-HLT
-MIN, DEC 83
-SUB, DEC -23
-DIF, HEX 0
-END
- */
-
-/*
-ORG 100
-LOP, CLE
-LDA Y
-CIR
-STA Y
-SZE
-BUN ONE
-BUN ZRO
-ONE, LDA X
-ADD P
-STA P
-CLE
-ZRO, LDA X
-CIL
-STA X
-ISZ CTR
-BUN LOP
-HLT
-CTR, DEC -8
-X, HEX F
-Y, HEX B
-P, HEX 0
-END
-*/
-
-/*
-ORG 100
-LDA X
-BSA OR
-HEX 140
-STA Y
-HLT
-X, HEX 150
-Y, HEX 0
-OR, HEX 0
-CMA
-STA TMP
-LDA OR I
-CMA
-AND TMP
-CMA
-ISZ OR
-BUN OR I
-TMP, HEX 0
-END
-*/
-
-/*
-ORG 100
-LDA X
-BSA SH4
-STA X
-LDA Y
-BSA SH4
-STA Y
-HLT
-X, HEX 1234
-Y, HEX 4321
-SH4, HEX 0
-CIL
-CIL
-CIL
-CIL
-AND MSK
-BUN SH4 I
-MSK, HEX FFF0
-END
- */
-
-/*
-ORG 100
-LDA AL
-ADD BL
-STA CL
-CLA
-CIL
-ADD AH
-ADD BH
-STA CH
-HLT
-AL, DEC 12
-AH, DEC 32
-BL, DEC 40
-BH, DEC 02
-CL,DEC 0
-CH, DEC 0
-END
-*/

@@ -15,47 +15,30 @@ const executeBtn = document.getElementById('executeBtn');
 const endprogramBtn = document.getElementById('endprogramBtn');
 const msgBox = document.getElementById('situation');
 const end_notif_box = document.getElementById('endProgram_notif');
-// const current_instruction = document.getElementById('current-instruction');
-// const update_memory_alarm = document.getElementById('update_memory_alarm');
-// const content_memory_span = document.getElementById('content_memory');
-// const current_address_span = document.getElementById('current_address');
-// const helpBtn = document.getElementById("helpBtn");
-// const closeBtn = document.getElementById("close-btn");
 const rules = document.getElementById("help");
-// const resetBtn = document.getElementById("resetBtn");
 
 function disableBtn(button) {
     button.disabled = true;
-    // button.style.backgroundColor = 'rgb(4, 153, 153)';
 }
 
 function enableBtn(button) {
     button.disabled = false;
-    // button.style.backgroundColor = '#29526b';
 }
 
 enableBtn(executeBtn);
 
 function fetch_instruction() {
-    // clearInstTable();
-    // updateInstructionTable('initial');
     instr_values["PC"] = '0x' + binaryToHex(PC);
     AR = PC; // T0
     let data = memory_table_contents['0' + parseInt(AR, 2).toString(16).toUpperCase()];
     instr_values['Memory'] = '0x' + data ? '0x' + data : '0x' + 0;
 
     instr_values["AR"] = '0x' + binaryToHex(AR);
-    // updateInstructionTable('T0');
-    IR = contentToAddress(data); //T1
+    IR = contentToAddress(data);
 
     instr_values["IR"] = '0x' + binaryToHex(IR);
-    PC = addBinary(PC, '1', 12); // become ready for next instruction
+    PC = addBinary(PC, '1', 12);
     instr_values["PC"] = '0x' + binaryToHex(PC);
-    // updateInstructionTable('T1');
-    // inst_columns[40].innerText = 'T3:';
-    // inst_columns[48].innerText = 'T4:';
-    // inst_columns[56].innerText = 'T5:';
-    // inst_columns[64].innerText = 'T6:';
     disableBtn(fetchBtn);
     enableBtn(decodeBtn);
 
@@ -63,13 +46,12 @@ function fetch_instruction() {
 
 function decode_instruction() {
     I = IR[0];
-    opcode_operation = IR.substr(1, 3); //3 bits
-    AR = IR.substr(4, 16); //12 bit address
+    opcode_operation = IR.substr(1, 3);
+    AR = IR.substr(4, 16);
     operation_code = AR.indexOf('1');
     instr_values["AR"] = '0x' + binaryToHex(AR);
     let data = memory_table_contents['0' + parseInt(AR, 2).toString(16)];
     instr_values['Memory'] = data ? '0x' + data : '0x' + 0;
-    // updateInstructionTable('T2');
     disableBtn(decodeBtn);
     enableBtn(executeBtn);
 }
@@ -80,60 +62,44 @@ function execute_instruction() {
     let opcode = parseInt(opcode_operation, 2);
     let operation = operation_code;
 
-    if (opcode == 7) { //register or IO
-        if (I == 0) { //register
+    if (opcode == 7) {
+        if (I == 0) {
             if (operation == 11) {
-                // current_instruction.innerText = 'HLT';
                 disableBtn(fetchBtn);
                 disableBtn(decodeBtn);
                 disableBtn(executeBtn);
-                fetchBtn.style.backgroundColor = 'rgb(4, 153, 153)';
-                decodeBtn.style.backgroundColor = 'rgb(4, 153, 153)';
-                executeBtn.style.backgroundColor = 'rgb(4, 153, 153)';
-                messageBox.style.color="#ff0303";
+                messageBox.style.color = "#ff0303";
                 messageBox.value = 'program ended!'
-                // inst_columns[40].innerText = 'T3: S<-0';
                 return 0;
             } else if (operation == 10) {
-                // current_instruction.innerText = 'SZE';
                 if (E == 0) {
                     console.log('if E was zero: jump', E, typeof (E));
                     PC = addBinary(PC, '1', 12);
                     instr_values['PC'] = '0x' + binaryToHex(PC);
-                    // inst_columns[40].innerText = 'T3: PC <- PC+1';
                 }
             } else if (operation == 9) {
-                // current_instruction.innerText = 'SZA';
                 if (AC === '0000000000000000') {
                     PC = addBinary(PC, '1', 12);
                     instr_values['PC'] = '0x' + binaryToHex(PC);
-                    // inst_columns[40].innerText = 'T3: PC <- PC+1';
                 }
             } else if (operation == 8) {
-                // current_instruction.innerText = 'SNA';
                 if (AC[0] === '1') {
                     PC = addBinary(PC, '1', 12);
                     instr_values['PC'] = '0x' + binaryToHex(PC);
-                    // inst_columns[40].innerText = 'T3: PC <- PC+1';
                 }
             } else if (operation == 7) {
-                // current_instruction.innerText = 'SPA';
                 if (AC[15] === '0') {
                     PC = addBinary(PC, '1', 12);
                     instr_values['PC'] = '0x' + binaryToHex(PC);
-                    // inst_columns[40].innerText = 'T3: PC <- PC+1';
                 }
             } else if (operation == 6) {
-                // current_instruction.innerText = 'INC';
                 if (AC == '1111111111111111') {
                     AC = '0000000000000000';
                 } else {
-                    AC = addBinary(AC, '1', 16); //T5
+                    AC = addBinary(AC, '1', 16);
                 }
                 instr_values['AC'] = '0x' + binaryToHex(AC);
-                // inst_columns[40].innerText = 'T3: AC <- AC +1';
             } else if (operation == 5) {
-                // current_instruction.innerText = 'CIL';
                 let temp = AC[0];
                 let ans = '';
                 ans = AC.substr(1, AC.length) + E;
@@ -141,9 +107,7 @@ function execute_instruction() {
                 E = temp;
                 instr_values['AC'] = '0x' + binaryToHex(AC);
                 instr_values['E'] = '0x' + E;
-                // inst_columns[40].innerText = 'T3: AC<-shl AC, AC(0)<-E , E<-AC(15)';
             } else if (operation == 4) {
-                // current_instruction.innerText = 'CIR';
                 let temp = AC[15];
                 let ans = '';
                 ans = E + AC.substr(0, AC.length - 1);
@@ -151,58 +115,41 @@ function execute_instruction() {
                 E = temp;
                 instr_values['AC'] = '0x' + binaryToHex(AC);
                 instr_values['E'] = '0x' + E;
-                // inst_columns[40].innerText = 'T3: AC<-shr AC, AC(15)<-E , E<-AC(0)';
             } else if (operation == 3) {
-                // current_instruction.innerText = 'CME';
                 E = complementOne(E);
                 instr_values['E'] = '0x' + E;
-                // inst_columns[40].innerText = 'T3: E<- ~E';
             } else if (operation == 2) {
-                // current_instruction.innerText = 'CMA';
                 AC = complementOne(AC);
                 instr_values['AC'] = '0x' + binaryToHex(AC);
-                // inst_columns[40].innerText = 'T3: AC<- ~AC';
             } else if (operation == 1) {
-                // current_instruction.innerText = 'CLE';
                 E = 0;
                 instr_values['E'] = '0x' + E;
-                // inst_columns[40].innerText = 'T3: E<- 0';
             } else if (operation == 0) {
-                // current_instruction.innerText = 'CLA';
                 AC = '0000000000000000';
                 instr_values['AC'] = '0x' + binaryToHex(AC);
-                // inst_columns[40].innerText = 'T3: AC<- 0';
             }
-            // updateInstructionTable('T3');
         } else { // IO
             if (operation == 5) {
-                // current_instruction.innerText = 'IOF';
                 IEN = 0;
             } else if (operation == 4) {
-                // current_instruction.innerText = 'ION';
                 IEN = 1;
             } else if (operation == 3) {
-                // current_instruction.innerText = 'SKO';
                 if (FGO == 1) {
-                    PC = addBinary(PC, '1', 12); // skip next instruction
+                    PC = addBinary(PC, '1', 12);
                 }
             } else if (operation == 2) {
-                // current_instruction.innerText = 'SKI';
                 if (FGI == 0) {
-                    PC = addBinary(PC, '1', 12); // skip next instruction
+                    PC = addBinary(PC, '1', 12);
                 }
             } else if (operation == 1) {
-                // current_instruction.innerText = 'OUT';
-                OUTR = AC.substr(8, 15); //8bit low
+                OUTR = AC.substr(8, 15);
                 FGO = 0;
             } else if (operation == 0) {
-                // current_instruction.innerText = 'INP';
                 AC = AC.substr(0, 8) + INPR;
                 FGI = 0;
             }
-            // updateInstructionTable('T3');
         }
-    } else { //memory ref
+    } else {
         if (I == 1) {
             let data = memory_table_contents['0' + parseInt(AR, 2).toString(16).toUpperCase()];
             AR = isNegative(data) ? hexToBinary_signed(data, 16) : hexToBinary(data, 16);
@@ -210,122 +157,72 @@ function execute_instruction() {
             instr_values['Memory'] = '0x' + memory_table_contents['0' + data];
         }
         if (opcode == 0) {
-            // current_instruction.innerText = 'AND';
             let data = memory_table_contents['0' + parseInt(AR, 2).toString(16).toUpperCase()];
             DR = isNegative(data) ? hexToBinary_signed(data, 16) : hexToBinary(data, 16);
             instr_values['DR'] = '0x' + binaryToHex(DR);
-            // updateInstructionTable('T4');
-            // inst_columns[48].innerText = 'T4: DR<-M[AR]';
-            AC = andTwoNumbers(AC, DR); //T5
+            AC = andTwoNumbers(AC, DR);
             instr_values['AC'] = '0x' + binaryToHex(AC);
-            // updateInstructionTable('T5');
-            // inst_columns[56].innerText = 'T5: AC<-AC ^ DR, SC<-0';
         } else if (opcode == 1) {
-            // current_instruction.innerText = 'ADD';
             let data = memory_table_contents['0' + parseInt(AR, 2).toString(16).toUpperCase()];
             DR = isNegative(data) ? hexToBinary_signed(data, 16) : hexToBinary(data, 16);
             instr_values['DR'] = '0x' + binaryToHex(DR);
-            // inst_columns[48].innerText = 'T4: DR<-M[AR]';
-            // updateInstructionTable('T4');
             if (AC == '1111111111111111') {
                 AC = '0000000000000000';
             } else {
-                AC = addBinary(AC, DR, 16); //T5 //add AC and DR
+                AC = addBinary(AC, DR, 16);
             }
             E = Cout;
             instr_values['AC'] = '0x' + binaryToHex(AC);
             instr_values['E'] = '0x' + E;
-            // inst_columns[56].innerText = 'T5: AC<-AC + DR,E<-Cout, SC<-0';
-            // updateInstructionTable('T5');
+
         } else if (opcode == 2) {
             // current_instruction.innerText = 'LDA';
             let data = memory_table_contents['0' + parseInt(AR, 2).toString(16).toUpperCase()];
             DR = isNegative(data) ? hexToBinary_signed(data, 16) : hexToBinary(data, 16);
             instr_values['DR'] = '0x' + binaryToHex(DR);
-            // inst_columns[48].innerText = 'T4: DR<-M[AR]';
-            // updateInstructionTable('T4');
             AC = DR; //T5
             instr_values['AC'] = '0x' + binaryToHex(AC);
-            // inst_columns[56].innerText = 'T5: AC<-DR, SC<-0';
-            // updateInstructionTable('T5');
         } else if (opcode == 3) {
-            // current_instruction.innerText = 'STA';
             let address = '0' + parseInt(AR, 2).toString(16).toUpperCase();
             memory_table_contents[address] = binaryToHex(AC); //T4 convert address to content
             update_memory_table(address);
-            // content_memory_span.innerText = memory_table_contents[address];
-            // current_address_span.innerText = address;
-            // update_memory_alarm.classList.add('show');
-            // setTimeout(() => {
-            // update_memory_alarm.classList.remove('show');
-            // }, 6000);
             instr_values['Memory'] = '0x' + memory_table_contents[address];
-            // inst_columns[48].innerText = 'T4: M[AR]<-AC,SC<-0';
-            // updateInstructionTable('T4');
         } else if (opcode == 4) {
             // current_instruction.innerText = 'BUN';
             PC = AR;
             instr_values['PC'] = '0x' + binaryToHex(PC);
-            // inst_columns[48].innerText = 'T4: PC<-AR,SC<-0';
-            // updateInstructionTable('T4');
         } else if (opcode == 5) {
             // current_instruction.innerText = 'BSA';
             let address = '0' + parseInt(AR, 2).toString(16).toUpperCase();
-            memory_table_contents[address] = binaryToHex(PC); //T4 ????? convert address to content
+            memory_table_contents[address] = binaryToHex(PC);
             update_memory_table(address);
-            // content_memory_span.innerText = memory_table_contents[address];
-            // current_address_span.innerText = address;
-            // update_memory_alarm.classList.add('show');
-            // setTimeout(() => {
-            //     update_memory_alarm.classList.remove('show');
-            // }, 6000);
             AR = addBinary(AR, '1', 12); //T4
             instr_values['AR'] = '0x' + binaryToHex(AR);
             instr_values['Memory'] = '0x' + memory_table_contents[address];
-            // inst_columns[48].innerText = 'T4: M[AR]<-PC,AR<-AR+1';
-            // updateInstructionTable('T4');
             PC = AR; //T5
             instr_values['PC'] = '0x' + binaryToHex(PC);
-            // inst_columns[56].innerText = 'T5: PC<-AC,SC<-0';
-            // updateInstructionTable('T5');
         } else if (opcode == 6) {
-            // current_instruction.innerText = 'ISZ';
             let address = '0' + parseInt(AR, 2).toString(16).toUpperCase();
             let data = memory_table_contents[address];
             DR = isNegative(data) ? hexToBinary_signed(data, 16) : hexToBinary(data, 16);
             instr_values['DR'] = '0x' + binaryToHex(DR);
-            // inst_columns[48].innerText = 'T4: DR<-M[AR]';
-            // updateInstructionTable('T4');
             if (DR == '1111111111111111') {
                 DR = '0000000000000000';
             } else {
                 DR = addBinary(DR, '1', 16); //T5
             }
             instr_values['DR'] = '0x' + binaryToHex(DR);
-            // inst_columns[56].innerText = 'T5: DR<-DR+1';
-            // updateInstructionTable('T5');
 
-            memory_table_contents[address] = binaryToHex(DR); //T6 convert address to content
+            memory_table_contents[address] = binaryToHex(DR);
             update_memory_table(address);
-            // content_memory_span.innerText = memory_table_contents[address];
-            // current_address_span.innerText = address;
-            // update_memory_alarm.classList.add('show');
-            // setTimeout(() => {
-            //     update_memory_alarm.classList.remove('show');
-            // }, 6000);
             data = memory_table_contents[address];
             instr_values['Memory'] = '0x' + data;
-            // inst_columns[64].innerText = 'T6: M[AR]<-DR,SC<-0';
             if (DR == 0) {
                 PC = addBinary(PC, '1', 12); //T6
                 instr_values['PC'] = '0x' + binaryToHex(PC);
-                // inst_columns[64].innerText = 'T6: M[AR]<-DR,PC<-PC+1,SC<-0';
             }
-
-            // updateInstructionTable('T6');
         }
     }
-    // updateInstructionTable('final');
     updateInstruction();
     disableBtn(executeBtn);
     enableBtn(fetchBtn);
@@ -460,15 +357,6 @@ function resetProgram() {
 fetchBtn.addEventListener('click', fetch_instruction);
 decodeBtn.addEventListener('click', decode_instruction);
 executeBtn.addEventListener('click', execute_instruction);
-// helpBtn.addEventListener("click", () => {
-//     rules.classList.add("show");
-// });
-
-// closeBtn.addEventListener("click", () => {
-//     rules.classList.remove("show");
-// });
-
-// resetBtn.addEventListener('click', resetProgram);
 
 endprogramBtn.addEventListener('click', () => {
     msgBox.value = 'program ended'
