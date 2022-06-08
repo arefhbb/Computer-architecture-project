@@ -15,9 +15,9 @@ const executeBtn = document.getElementById('executeBtn');
 const endprogramBtn = document.getElementById('endprogramBtn');
 const end_notif_box = document.getElementById('endProgram_notif');
 // const current_instruction = document.getElementById('current-instruction');
-const update_memory_alarm = document.getElementById('update_memory_alarm');
-const content_memory_span = document.getElementById('content_memory');
-const current_address_span = document.getElementById('current_address');
+// const update_memory_alarm = document.getElementById('update_memory_alarm');
+// const content_memory_span = document.getElementById('content_memory');
+// const current_address_span = document.getElementById('current_address');
 // const helpBtn = document.getElementById("helpBtn");
 // const closeBtn = document.getElementById("close-btn");
 const rules = document.getElementById("help");
@@ -252,12 +252,12 @@ function execute_instruction() {
             let address = '0' + parseInt(AR, 2).toString(16).toUpperCase();
             memory_table_contents[address] = binaryToHex(AC); //T4 convert address to content
             update_memory_table(address);
-            content_memory_span.innerText = memory_table_contents[address];
-            current_address_span.innerText = address;
-            update_memory_alarm.classList.add('show');
-            setTimeout(() => {
-                update_memory_alarm.classList.remove('show');
-            }, 6000);
+            // content_memory_span.innerText = memory_table_contents[address];
+            // current_address_span.innerText = address;
+            // update_memory_alarm.classList.add('show');
+            // setTimeout(() => {
+            // update_memory_alarm.classList.remove('show');
+            // }, 6000);
             instr_values['Memory'] = '0x' + memory_table_contents[address];
             // inst_columns[48].innerText = 'T4: M[AR]<-AC,SC<-0';
             // updateInstructionTable('T4');
@@ -272,12 +272,12 @@ function execute_instruction() {
             let address = '0' + parseInt(AR, 2).toString(16).toUpperCase();
             memory_table_contents[address] = binaryToHex(PC); //T4 ????? convert address to content
             update_memory_table(address);
-            content_memory_span.innerText = memory_table_contents[address];
-            current_address_span.innerText = address;
-            update_memory_alarm.classList.add('show');
-            setTimeout(() => {
-                update_memory_alarm.classList.remove('show');
-            }, 6000);
+            // content_memory_span.innerText = memory_table_contents[address];
+            // current_address_span.innerText = address;
+            // update_memory_alarm.classList.add('show');
+            // setTimeout(() => {
+            //     update_memory_alarm.classList.remove('show');
+            // }, 6000);
             AR = addBinary(AR, '1', 12); //T4
             instr_values['AR'] = '0x' + binaryToHex(AR);
             instr_values['Memory'] = '0x' + memory_table_contents[address];
@@ -306,12 +306,12 @@ function execute_instruction() {
 
             memory_table_contents[address] = binaryToHex(DR); //T6 convert address to content
             update_memory_table(address);
-            content_memory_span.innerText = memory_table_contents[address];
-            current_address_span.innerText = address;
-            update_memory_alarm.classList.add('show');
-            setTimeout(() => {
-                update_memory_alarm.classList.remove('show');
-            }, 6000);
+            // content_memory_span.innerText = memory_table_contents[address];
+            // current_address_span.innerText = address;
+            // update_memory_alarm.classList.add('show');
+            // setTimeout(() => {
+            //     update_memory_alarm.classList.remove('show');
+            // }, 6000);
             data = memory_table_contents[address];
             instr_values['Memory'] = '0x' + data;
             // inst_columns[64].innerText = 'T6: M[AR]<-DR,SC<-0';
