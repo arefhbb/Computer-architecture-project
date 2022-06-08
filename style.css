@@ -14,6 +14,11 @@ body {
   min-width: 940px;
 }
 
+#situation{
+  color: rgb(243, 29, 29);
+  background-color: rgba(219, 119, 250, 0.4);
+}
+
 .containerR {
   height: 50vh;
   display: flex;

@@ -13,6 +13,7 @@ const fetchBtn = document.getElementById('fetchBtn');
 const decodeBtn = document.getElementById('decodeBtn');
 const executeBtn = document.getElementById('executeBtn');
 const endprogramBtn = document.getElementById('endprogramBtn');
+const msgBox = document.getElementById('situation');
 const end_notif_box = document.getElementById('endProgram_notif');
 // const current_instruction = document.getElementById('current-instruction');
 // const update_memory_alarm = document.getElementById('update_memory_alarm');
@@ -89,8 +90,8 @@ function execute_instruction() {
                 fetchBtn.style.backgroundColor = 'rgb(4, 153, 153)';
                 decodeBtn.style.backgroundColor = 'rgb(4, 153, 153)';
                 executeBtn.style.backgroundColor = 'rgb(4, 153, 153)';
-                end_notif_box.style.display = 'flex';
-                boxShadow.classList.add('show');
+                messageBox.style.color="#ff0303";
+                messageBox.value = 'program ended!'
                 // inst_columns[40].innerText = 'T3: S<-0';
                 return 0;
             } else if (operation == 10) {
@@ -470,6 +471,5 @@ executeBtn.addEventListener('click', execute_instruction);
 // resetBtn.addEventListener('click', resetProgram);
 
 endprogramBtn.addEventListener('click', () => {
-    end_notif_box.style.display = 'none';
-    boxShadow.classList.remove('show');
+    msgBox.value = 'program ended'
 })

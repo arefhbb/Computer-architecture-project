@@ -2,6 +2,11 @@
 
 // memory instructions
 // only we define opcodes here
+
+
+const lastCodeText = JSON.parse(localStorage.getItem("lastCode"));
+
+
 const memory_instructions = {
     AND: [0, 8],
     ADD: [1, 9],
@@ -74,6 +79,11 @@ let operations_line = 0;
 
 
 const assemblerBtn = document.getElementById("assemblerBtn");
+const codeArea = document.getElementById("editor");
+codeArea.value = lastCodeText;
+const resetBtn = document.getElementById("resetBtn");
+const messageBox = document.getElementById('situation');
+const saveBtn = document.getElementById("saveBtn");
 const errorLine = document.getElementById('error_line');
 const errorLineBtn = document.getElementById('errorLineBtn');
 const errorLine_container = document.getElementById('errorLine_container');
@@ -198,8 +208,8 @@ function scanEveryLine_second() {
         let target = results_contents[0];
         if (search_in_object(memory_instructions, target)) {
             if (!search_in_object(labels_table, results_contents[1])) {
-                errorLine_container.style.display = 'flex';
-                boxShadow.classList.add('show');
+                messageBox.value = 'program ended!'
+
                 errorLine.innerText = LC;
             } else {
                 // if it is memory instruction:
@@ -231,10 +241,10 @@ function scanEveryLine_second() {
             LC = addHexNumbers(LC, '1');
             numberOfAddress++;
         } else {
-            console.log('waaaaaaaaaaarning!!!! in line: ' + LC + ' of memory');
-            console.log('instruction doesnt exist');
-            errorLine_container.style.display = 'flex';
-            boxShadow.classList.add('show');
+            
+            //errorLine_container.style.display = 'flex';
+            //boxShadow.classList.add('show');
+            messageBox.value = 'program ended!'
             errorLine.innerText = LC;
             LC = addHexNumbers(LC, '1');
             numberOfAddress++;
@@ -341,16 +351,16 @@ const close_empty_error = document.getElementById('emptyBtn');
 function start_assemble() {
     const strings = document.getElementById("editor").value;
     if (strings == "") {
-        errors_div.style.display = 'flex';
-        boxShadow.classList.add('show');
+        messageBox.style.color = '#ff0303';
+        messageBox.value = 'Editor is Empty !';
     } else {
         editor_contents = strings;
         results = editor_contents.split("\n");
         firstStep();
         secondStep();
         if (errorLine.innerText == '') {
-            assemble_successfully.style.display = 'flex';
-            boxShadow.classList.add('show');
+            messageBox.style.color = '#03ff0b';
+            messageBox.value = 'program assembled successfully !';
             console.log(labels_table);
             console.log(memory_table_contents);
             updateContentsColumn();
@@ -371,15 +381,27 @@ close_empty_error.addEventListener('click', () => {
     boxShadow.classList.remove('show');
 })
 
-errorLineBtn.addEventListener('click', () => {
-    errorLine_container.style.display = 'none';
-    boxShadow.classList.remove('show');
+saveBtn.addEventListener("click" , () => {
+    messageBox.style.color = '#03ff0b';
+    localStorage.setItem("lastCode" , JSON.stringify(codeArea.value));
+    messageBox.value = 'code saved in local storage successfully !';
 })
 
-assembled_successfully_Btn.addEventListener('click', () => {
-    assemble_successfully.style.display = 'none';
-    boxShadow.classList.remove('show');
+errorLineBtn.addEventListener('click', () => {
+    messageBox.style.color = '#ff0303';
+    messageBox.value = 'an invalid instruction in address ';
 })
+
+resetBtn.addEventListener('click' , () => {
+    messageBox.style.color = '#03ff0b';
+    codeArea.value = "";
+    messageBox.value = 'reseted successfuly!';
+})
+
+// assembled_successfully_Btn.addEventListener('click', () => {
+//     messageBox.style.color = 'green';
+//     messageBox.value = 'program assembled successfully!';
+// })
 
 // ***************************  EXAMPLES  *************************************
 /**
